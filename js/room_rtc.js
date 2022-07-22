@@ -14,10 +14,10 @@ let channel;
 
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
-let roomId = urlParams.get('room')
+let indexId = urlParams.get('index')
 
-if(!roomId){
-    roomId = 'main'
+if(!indexId){
+    indexId = 'main'
 }
 
 let displayName = sessionStorage.getItem('display_name')
@@ -31,13 +31,13 @@ let remoteUsers = {}
 let localScreenTracks;
 let sharingScreen = false;
 
-let joinRoomInit = async () => {
+let joinindexInit = async () => {
     rtmClient = await AgoraRTM.createInstance(APP_ID)
     await rtmClient.login({uid,token})
 
     await rtmClient.addOrUpdateLocalUserAttributes({'name':displayName})
 
-    channel = await rtmClient.createChannel(roomId)
+    channel = await rtmClient.createChannel(indexId)
     await channel.join()
 
     channel.on('MemberJoined', handleMemberJoined)
@@ -45,10 +45,10 @@ let joinRoomInit = async () => {
     channel.on('ChannelMessage', handleChannelMessage)
 
     getMembers()
-    addBotMessageToDom(`Welcome to the room ${displayName}! 👋`)
+    addBotMessageToDom(`Welcome to the index ${displayName}! 👋`)
 
     client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
-    await client.join(APP_ID, roomId, token, uid)
+    await client.join(APP_ID, indexId, token, uid)
 
     client.on('user-published', handleUserPublished)
     client.on('user-left', handleUserLeft)
@@ -254,4 +254,4 @@ document.getElementById('join-btn').addEventListener('click', joinStream)
 document.getElementById('leave-btn').addEventListener('click', leaveStream)
 
 
-joinRoomInit()
+joinindexInit()

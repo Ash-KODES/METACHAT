@@ -1,12 +1,12 @@
 let handleMemberJoined = async (MemberId) => {
-    console.log('A new member has joined the room:', MemberId)
+    console.log('A new member has joined the index:', MemberId)
     addMemberToDom(MemberId)
 
     let members = await channel.getMembers()
     updateMemberTotal(members)
 
     let {name} = await rtmClient.getUserAttributesByKeys(MemberId, ['name'])
-    addBotMessageToDom(`Welcome to the room ${name}! 👋`)
+    addBotMessageToDom(`Welcome to the index ${name}! 👋`)
 }
 
 let addMemberToDom = async (MemberId) => {
@@ -36,7 +36,7 @@ let handleMemberLeft = async (MemberId) => {
 let removeMemberFromDom = async (MemberId) => {
     let memberWrapper = document.getElementById(`member__${MemberId}__wrapper`)
     let name = memberWrapper.getElementsByClassName('member_name')[0].textContent
-    addBotMessageToDom(`${name} has left the room.`)
+    addBotMessageToDom(`${name} has left the index.`)
         
     memberWrapper.remove()
 }
